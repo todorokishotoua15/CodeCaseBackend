@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "heroku-postbuild": "npm install && cd client && npm install && npm run build",
+    "heroku-postbuild": "npm install",
     "start": "node ./bin/www "
   },
   "engines": {
