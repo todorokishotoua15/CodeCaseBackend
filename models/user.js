@@ -22,6 +22,10 @@ const User = new Schema({
     rating : {
         type: Number,
         required: true
+    },
+    email : {
+        type: String,
+        default : ""
     }
 });
 
