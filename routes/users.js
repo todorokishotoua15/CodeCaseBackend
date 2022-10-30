@@ -14,6 +14,18 @@ router.get('/', function(req, res, next) {
       res.json(users);
   })
 });
+router.post('/findemail', function(req,res,next) {
+  User.findOne({username:req.body.username})
+    .then((user) => {
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json');
+      res.send({email:user.email});
+    }).catch((err) => {
+      res.statusCode = 500;
+      res.setHeader('Content-Type', 'application/json');
+      res.send({email:"Not found"});
+    })
+})
 router.post('/', function(req, res, next) {
   console.log(req.body);
   res.send('respond with a resource');
@@ -24,7 +36,8 @@ router.post('/signup', (req,res,next) => {
       username: req.body.username, 
       firstname: req.body.firstname,
       lastname: req.body.lastname,
-      rating : -1
+      rating : -1,
+      email: req.body.email
       }), req.body.password,
         (err, user) => {
           if(err) {

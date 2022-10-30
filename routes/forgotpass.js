@@ -96,13 +96,45 @@ router.post('/', function(req,res,next) {
 
 });
 
+router.get('/clearall', function(req,res1,next) {
+    OTP.find({})
+    .then((otps) => {
+        const date_now = new Date();
+
+        for (var i = 0; i < otps.length; i++) {
+            const old_date = otps[i].time;
+            
+            console.log(date_now.getDay());
+            console.log(old_date.getDay());
+            
+            const diffDays = Math.abs(date_now.getDay() - old_date.getDay());
+
+            console.log(diffDays);
+            if (diffDays >= 1) {
+                otps[i].remove();
+            }
+        }
+
+        res1.statusCode = 200;
+        res1.setHeader('Content-Type', 'application/json');
+        res1.send({status:"success!"});
+
+    }).catch((err) => {
+        console.log(err);
+    })
+});
+
 router.post('/validate', function(req,res1,next) {
     var otp = req.body.otp;
     var email = req.body.email;
     console.log(req.body);
+
+    
+
     OTP.findOne({data: otp, email: email})
         .then((result) => {
             console.log(otp, result.data);
+            result.remove();
             res1.statusCode = 200;
             res1.setHeader('Content-Type', 'application/json');
             res1.send({validation: "success"});

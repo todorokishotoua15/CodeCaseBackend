@@ -7,6 +7,10 @@ const Otp = new Schema({
     },
     email: {
         type: String
+    },
+    time: {
+        type: Date,
+        default: Date.now
     }
 })
 
